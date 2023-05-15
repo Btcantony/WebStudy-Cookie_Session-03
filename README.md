@@ -1,11 +1,6 @@
 <h1>자바웹개발워크북 3장 실습 쿠키 && 세션 </h1>
 <br>
-<p>1. TodoDAOTest를 실행해 등록, 목록, 조회, 삭제, 수정 만들기 </p>
-<br>
-<br>
-
-<br>
-<p>2. 서비스 와 컨트롤러 연동  </p>
+<p>1. 로그인 체크, 로그 아웃, 자동 로그인 처리 </p>
 <br>
 <br>
 
@@ -17,34 +12,34 @@
 
 
 <h1>⚡ 핵심기능</h1> <br>
-<li> TodoDAOTest를 실행해 등록, 목록, 조회, 삭제, 수정 만들기  <br> <br>
-&nbsp;&nbsp; : TodoVO 생성 @Getter -> TodoDAO 생성 ( String sql 만들고 @CleanUP 이용, 매개변수 TodoVO, 리턴타입 cbc) -> TodoDAOTests 에서  todoDAO.selectAll(); 실행  <br><br></li><br> <br>
-
-<img width="700" alt="Pasted Graphic 2" src="https://user-images.githubusercontent.com/94521647/236224443-25d77240-1326-4f81-87c6-55f00cfd084c.png">
- <br> <br>
+<li> 게시글 쓸 떄, 로그인 체크   <br> <br>
+&nbsp;&nbsp; :  TodoRegisterController (쿠키가 새로만들어진 사용자, 로그인한 정보가 없는 사용자 -> login.jsp 아니면 register.jsp로) ->  LoginController 생성 doGet -> login.jsp 에 아이디(Mid)와 패스워드(mpw) 저장 -> LoginController doPost() Mid와 mpw 수집하고 loginInfo로 반환 
+ <br><br></li><br> <br>
 
 
-<li>서비스 와 컨트롤러 연동  <br> <br>
-&nbsp;&nbsp; : 1. 등록  TodoDTO 셍성 - MapperUtil세팅(객체 정보 다른객체로 복사) - Todoservice (register DTO를 파라미터로 받아 VO로 변환) - TodoServicesTests를 통한 확인 <br><br></li><br> <br>
-&nbsp;&nbsp; : 2. 목록  2. Todoservice (listAll() 구현, TodoVO목록을 모두 TodoDTO로 변환
-- TodoListController 에서 setAttrivute()통해 Todoservice객체 저장, requestDispatcher를 통해 JSP전달 -> list.jsp에서 ${dto}로 받아줌 
-<br><br></li><br> <br>
+<img width="700" alt="Pasted Graphic" src="https://github.com/Btcantony/WebStudy-Cookie_Session-03/assets/94521647/06512d40-cd7c-4aa7-a684-8dee225b1111">  
+<img width="700" alt="INSERT TITLE" src="https://github.com/Btcantony/WebStudy-Cookie_Session-03/assets/94521647/427f67cc-370d-4d55-b1d5-53051c44560f"> <br> <br>
 
 
-<img width="700" alt="RESET REGISTER" src="https://user-images.githubusercontent.com/94521647/236225084-91cedfd5-a5a1-425b-bb83-327913eeebcc.png">  <br> <br>
+<li>로그인한 사용자 정보 띄우기   <br> <br>
+&nbsp;&nbsp; : DB연결 -> MemberVO, MemberDAO구현 -> MemberDTO 구현 -> MemberService 에 login()메소드 작성 -> LoginController의 doPost에서 로그인 작동 (로그인시 HttpSession을 통해 loginInfo로 객체 저장) -> login.jsp에서 로그인 에러 처리 <c:if> -> list.jsp에 ${loginInfo}호출 
+ <br><br></li><br> <br>
 
-<img width="700" alt="Todo List" src="https://user-images.githubusercontent.com/94521647/236225160-32138e82-bb1f-476f-8f60-89865b32e5a8.png">  <br> <br>
+ <img width="700" alt="Pasted Graphic" src="https://github.com/Btcantony/WebStudy-Cookie_Session-03/assets/94521647/3156218c-143f-4b8e-9f83-f8938b08c571"> <br> <br>
+ 
+ <img width="700" alt="Todo List" src="https://github.com/Btcantony/WebStudy-Cookie_Session-03/assets/94521647/655b8bb0-30eb-470d-81fa-a3f394eccb03"> <br> <br>
 
-<img width="700" alt="Pasted Graphic 6" src="https://user-images.githubusercontent.com/94521647/236225244-8606e8d1-cd9c-4fed-9e37-d3ce65c621da.png"> <br> <br>
+ 
+ 
+<li>자동로그인 처리  (사용자 정의 쿠키 처리) <br> <br>
+&nbsp;&nbsp; (1) : Todo번호(tno)를 쿠키를 이용해서 보관 -> TodoReadController에서 //모델담기 //쿠키찾기 //findCookie생성 
+ <br><br></li><br> <br>
+ &nbsp;&nbsp; (2) : login.sjp에 체크박스 추가 -> LoginController의 doPost()에서 체크박스 전송값 on 확인 , 임의의 UUID 생성 -> MemberVO, MemberDTO수정 -> MemberService 메소드 추가 -> LoginController반영 (doPost에 remember-me 생성 + 전송) -> MemberDAO , MemberSErvice변경 -> LoginCheckFIlter쿠키 체크 
+ <br><br></li><br> <br>
+ 
+<img width="700" alt="Pasted Graphic 3" src="https://github.com/Btcantony/WebStudy-Cookie_Session-03/assets/94521647/fe54ea1c-d7dc-4bc3-9279-146b7c60a422">
+<img width="700" alt="Pasted Graphic 4" src="https://github.com/Btcantony/WebStudy-Cookie_Session-03/assets/94521647/9a7fa979-d0fe-4443-a285-5334666fa493"> <br><br></li><br> <br>
 
-<img width="700" alt="Pasted Graphic 7" src="https://user-images.githubusercontent.com/94521647/236225295-81928408-a241-4e0a-8a0a-d74d0460b3fa.png"> <br> <br>
-
-<img width="700" alt="Pasted Graphic 8" src="https://user-images.githubusercontent.com/94521647/236225362-e77a9ea4-5f91-4507-b41a-d214cdc0c175.png"> <br> <br>
-
-
-
-
-
-
+<img width="700" alt="Todo List" src="https://github.com/Btcantony/WebStudy-Cookie_Session-03/assets/94521647/dedfdc2b-79e0-41b7-9186-d279aabb4c1b"> <br> <br>
 
 <br><p>본 내용은 자바 웹 개발 워크북을 공부하며, 개발하였습니다. </p>
